@@ -5,6 +5,7 @@ services:
     image: florenttorregrosa/docker-drupal-dev:php7
     depends_on:
       - mysql
+      - redis
       - mail
       - solr
     volumes:
@@ -42,11 +43,18 @@ services:
         ipv4_address: 172.18.0.4
 
 
+  redis:
+    image: redis:3.2.1-alpine
+    networks:
+      default:
+        ipv4_address: 172.18.0.5
+
+
   mail:
     image: djfarrelly/maildev
     networks:
       default:
-        ipv4_address: 172.18.0.5
+        ipv4_address: 172.18.0.6
 
 
 networks:
