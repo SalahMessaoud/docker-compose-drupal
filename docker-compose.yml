@@ -5,6 +5,7 @@ services:
     image: florenttorregrosa/docker-drupal-dev:php7
     depends_on:
       - mysql
+      - solr
     volumes:
       - .:/project
 
@@ -17,6 +18,16 @@ services:
       MYSQL_DATABASE: drupal
     volumes:
       - ./data/db:/var/lib/mysql
+
+  solr:
+    image: solr:6.1.0-alpine
+    volumes:
+      - ./conf/solr:/solr-drupal/conf
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - drupal
+      - /solr-drupal
 
   mail:
     image: djfarrelly/maildev
